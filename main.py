@@ -1,17 +1,13 @@
 import os
-from pathlib import Path
 
-LINE = "Boss, sorry, jury summons for Thursday, I called to swap days and the clerk just laughed."
-
-
-def output_path():
-    out_dir = Path(os.environ.get("MAKEFUN_OUTPUT_DIR") or "/output")
-    out_dir.mkdir(parents=True, exist_ok=True)
-    return out_dir / "entry.txt"
+TEXT = "Sorry, fridge delivery is 1-5 today and they charge £40 to rebook if nobody answers."
 
 
-def main():
-    output_path().write_text(LINE, encoding="utf-8")
+def main() -> None:
+    output_dir = os.environ.get("MAKEFUN_OUTPUT_DIR") or "/output"
+    os.makedirs(output_dir, exist_ok=True)
+    with open(os.path.join(output_dir, "entry.txt"), "wb") as entry_file:
+        entry_file.write(TEXT.encode("utf-8"))
 
 
 if __name__ == "__main__":
