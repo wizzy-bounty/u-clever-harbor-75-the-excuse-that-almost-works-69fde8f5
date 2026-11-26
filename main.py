@@ -1,16 +1,13 @@
 import os
+from pathlib import Path
 
-
-def resolve_output_dir():
-    return os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
+ENTRY_LINE = "Sorry, Mum fell; hospital's keeping her till Friday and Dad can't do stairs alone, so I need the week off."
 
 
 def main():
-    text = "My annual leave request for launch week was approved in January, I just forgot to tell you."
-    out_dir = resolve_output_dir()
-    os.makedirs(out_dir, exist_ok=True)
-    with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
-        f.write(text)
+    destination = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
+    destination.mkdir(parents=True, exist_ok=True)
+    (destination / "entry.txt").write_bytes(ENTRY_LINE.encode("utf-8"))
 
 
 if __name__ == "__main__":
